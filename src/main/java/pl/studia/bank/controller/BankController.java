@@ -12,13 +12,19 @@ import pl.studia.bank.service.BankService;
 @Controller
 @RequestMapping("api/v1/controller")
 public class BankController {
-
+//        return ResponseEntity.notFound().build();
     @Autowired
     private BankService bankService;
 
     @PostMapping("/addBankAccount")
     public ResponseEntity<OperationResult> addBankAccount(){
-        bankService.addBankAccount();
+        OperationResult result = bankService.addBankAccount();
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/addBankDeposit")
+    public ResponseEntity<OperationResult> addBankDeposit(){
+        OperationResult result = bankService.addBankDeposit();
         return ResponseEntity.notFound().build();
     }
 }
