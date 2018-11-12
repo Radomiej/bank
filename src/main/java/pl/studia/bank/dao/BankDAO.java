@@ -10,6 +10,8 @@ import pl.studia.bank.model.Lokata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class BankDAO {
@@ -24,4 +26,10 @@ public class BankDAO {
     public void addBankDeposit(Lokata newBankDeposit) throws BankDepositException { bankDeposits.add(newBankDeposit); }
 
     public void addBankCredit(Kredyt newBankCredit) throws BankCreditException { bankCredits.add(newBankCredit); }
+
+    public BankAccount deleteBankAccount(int id) {
+        List<BankAccount> collected = bankAccounts.stream().filter(a -> a.getId() == UUID.randomUUID()).collect(Collectors.toList());
+        return collected.isEmpty() ? null : collected.get(0);
+    } //TODO zaszyty random UUID
+
 }

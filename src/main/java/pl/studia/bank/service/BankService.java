@@ -43,6 +43,11 @@ public class BankService {
         return result;
     }
 
+    public BankAccount deleteBankAccount(int id){
+
+        return bankDAO.deleteBankAccount(id);
+    }
+
     //TODO docelowo int duration, BigDecimal value <-- przekazać w argumentach
     public OperationResult addBankDeposit() {
 

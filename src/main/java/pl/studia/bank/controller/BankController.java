@@ -3,11 +3,14 @@ package pl.studia.bank.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import pl.studia.bank.model.BankAccount;
 import pl.studia.bank.model.OperationResult;
 import pl.studia.bank.service.BankService;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("api/v1/controller")
@@ -22,11 +25,23 @@ public class BankController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/deleteBankAccount") //TODO docelowo delete powinno moim zdaniem zwrócić usuwany obiekt
+    @ResponseBody
+    public BankAccount deleteBankAccount(int id){
+        BankAccount bankAccount = bankService.deleteBankAccount(id);
+        return bankAccount; //TODO zaszyte true
+    }
+
     @PostMapping("/addBankDeposit")
     public ResponseEntity<OperationResult> addBankDeposit(){
         OperationResult result = bankService.addBankDeposit();
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/addBankCredit")
+    public ResponseEntity<OperationResult> addBankCredit(){
+        OperationResult result = bankService.addBankCredit();
+        return ResponseEntity.notFound().build();
+    }
 
 }
