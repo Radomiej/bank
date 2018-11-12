@@ -10,7 +10,6 @@ import pl.studia.bank.model.BankAccount;
 import pl.studia.bank.model.OperationResult;
 import pl.studia.bank.service.BankService;
 
-import java.util.UUID;
 
 @Controller
 @RequestMapping("api/v1/controller")
@@ -25,11 +24,11 @@ public class BankController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/deleteBankAccount") //TODO docelowo delete powinno moim zdaniem zwrócić usuwany obiekt
+    @PostMapping("/deleteBankAccount")
     @ResponseBody
     public BankAccount deleteBankAccount(int id){
         BankAccount bankAccount = bankService.deleteBankAccount(id);
-        return bankAccount; //TODO zaszyte true
+        return bankAccount;
     }
 
     @PostMapping("/addBankDeposit")
