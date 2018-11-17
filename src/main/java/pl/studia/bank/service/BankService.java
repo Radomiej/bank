@@ -9,8 +9,8 @@ import pl.studia.bank.exception.BankAccountException;
 import pl.studia.bank.exception.BankCreditException;
 import pl.studia.bank.exception.BankDepositException;
 import pl.studia.bank.helper.BigIntegerFactory;
-import pl.studia.bank.model.Kredyt;
-import pl.studia.bank.model.Lokata;
+import pl.studia.bank.model.Credit;
+import pl.studia.bank.model.Deposit;
 import pl.studia.bank.model.OperationResult;
 import pl.studia.bank.model.BankAccount;
 
@@ -56,21 +56,21 @@ public class BankService {
     }
 
     //TODO docelowo int duration, BigDecimal value <-- przekazać w argumentach
-    public OperationResult<Lokata> addBankDeposit() {
+    public OperationResult<Deposit> addBankDeposit() {
 
-        OperationResult<Lokata> result = new OperationResult();
+        OperationResult<Deposit> result = new OperationResult();
 
-        Lokata lokata = new Lokata();
-        lokata.setId(UUID.randomUUID());
-        lokata.setBillingPeriod((int)Math.random());
-        lokata.setValue(new BigDecimal((int)Math.random()));
+        Deposit deposit = new Deposit();
+        deposit.setId(UUID.randomUUID());
+        deposit.setBillingPeriod((int)Math.random());
+        deposit.setValue(new BigDecimal((int)Math.random()));
 
 
-        result.setData(lokata);
+        result.setData(deposit);
         result.setSuccess(true);
 
         try {
-            bankDAO.addBankDeposit(lokata);
+            bankDAO.addBankDeposit(deposit);
         }catch (BankDepositException ex){
             result.setSuccess(false);
             log.error(ex.getMessage());
@@ -79,21 +79,21 @@ public class BankService {
         return result;
     }
 
-    public OperationResult<Kredyt> addBankCredit(){
-        OperationResult<Kredyt> result = new OperationResult();
+    public OperationResult<Credit> addBankCredit(){
+        OperationResult<Credit> result = new OperationResult();
 
-        Kredyt kredyt = new Kredyt();
-        kredyt.setId(UUID.randomUUID());
-        kredyt.setVaule(new BigDecimal((int)Math.random()));
-        kredyt.setBillingPeriod((int)Math.random());
-        kredyt.setCreditInterestRate(Math.random());
+        Credit credit = new Credit();
+        credit.setId(UUID.randomUUID());
+        credit.setVaule(new BigDecimal((int)Math.random()));
+        credit.setBillingPeriod((int)Math.random());
+        credit.setCreditInterestRate(Math.random());
 
 
-        result.setData(kredyt);
+        result.setData(credit);
         result.setSuccess(true);
 
         try {
-            bankDAO.addBankCredit(kredyt);
+            bankDAO.addBankCredit(credit);
         } catch (BankCreditException ex) {
             result.setSuccess(false);
             log.error(ex.getMessage());
