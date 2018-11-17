@@ -8,6 +8,7 @@ import pl.studia.bank.dao.BankDAO;
 import pl.studia.bank.exception.BankAccountException;
 import pl.studia.bank.exception.BankCreditException;
 import pl.studia.bank.exception.BankDepositException;
+import pl.studia.bank.helper.BigIntegerFactory;
 import pl.studia.bank.model.Kredyt;
 import pl.studia.bank.model.Lokata;
 import pl.studia.bank.model.OperationResult;
@@ -22,54 +23,64 @@ public class BankService {
     @Autowired
     private BankDAO bankDAO;
 
-    public OperationResult addBankAccount() {
+    public OperationResult<BankAccount> addBankAccount() {
 
-        OperationResult result = new OperationResult();
+        OperationResult<BankAccount> result = new OperationResult();
 
         BankAccount newBankAccount = new BankAccount();
         newBankAccount.setId(UUID.randomUUID());
         newBankAccount.setOwnerId(UUID.randomUUID());
         newBankAccount.setCreatedAt(DateTime.now());
+        newBankAccount.setBalance(BigIntegerFactory.INSTANCE.produceFromInt(0));
+
+        result.setData(newBankAccount);
+        result.setSuccess(true);//TODO można wynieść do konstruktora
 
         try {
             bankDAO.addBankAccount(newBankAccount);
-            result.setFinished(true);
         }catch (BankAccountException ex){
-            result.setFinished(false);
+            result.setSuccess(false);
             log.error(ex.getMessage());
         }
-
         return result;
     }
 
-    public BankAccount deleteBankAccount(int id){
+    public OperationResult<BankAccount> deleteBankAccount(String id){
 
-        return bankDAO.deleteBankAccount(id);
+        BankAccount bankAccount = bankDAO.deleteBankAccount(id);
+
+        OperationResult<BankAccount> bankAccountOperationResult = new OperationResult<>();
+        bankAccountOperationResult.setSuccess(bankAccount!=null);
+        bankAccountOperationResult.setData(bankAccount);
+        return bankAccountOperationResult;
     }
 
     //TODO docelowo int duration, BigDecimal value <-- przekazać w argumentach
-    public OperationResult addBankDeposit() {
+    public OperationResult<Lokata> addBankDeposit() {
 
-        OperationResult result = new OperationResult();
+        OperationResult<Lokata> result = new OperationResult();
 
         Lokata lokata = new Lokata();
         lokata.setId(UUID.randomUUID());
         lokata.setBillingPeriod((int)Math.random());
         lokata.setValue(new BigDecimal((int)Math.random()));
 
+
+        result.setData(lokata);
+        result.setSuccess(true);
+
         try {
             bankDAO.addBankDeposit(lokata);
-            result.setFinished(true);
         }catch (BankDepositException ex){
-            result.setFinished(false);
+            result.setSuccess(false);
             log.error(ex.getMessage());
         }
 
         return result;
     }
 
-    public OperationResult addBankCredit(){
-        OperationResult result = new OperationResult();
+    public OperationResult<Kredyt> addBankCredit(){
+        OperationResult<Kredyt> result = new OperationResult();
 
         Kredyt kredyt = new Kredyt();
         kredyt.setId(UUID.randomUUID());
@@ -77,11 +88,14 @@ public class BankService {
         kredyt.setBillingPeriod((int)Math.random());
         kredyt.setCreditInterestRate(Math.random());
 
+
+        result.setData(kredyt);
+        result.setSuccess(true);
+
         try {
             bankDAO.addBankCredit(kredyt);
-            result.setFinished(true);
         } catch (BankCreditException ex) {
-            result.setFinished(false);
+            result.setSuccess(false);
             log.error(ex.getMessage());
         }
 

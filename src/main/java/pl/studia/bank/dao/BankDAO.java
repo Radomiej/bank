@@ -27,9 +27,16 @@ public class BankDAO {
 
     public void addBankCredit(Kredyt newBankCredit) throws BankCreditException { bankCredits.add(newBankCredit); }
 
-    public BankAccount deleteBankAccount(int id) {
-        List<BankAccount> collected = bankAccounts.stream().filter(a -> a.getId() == UUID.randomUUID()).collect(Collectors.toList());
+    public BankAccount deleteBankAccount(String id) {
+        BankAccount bankAccount = findBankAccount(id);
+        boolean remove = bankAccounts.remove(bankAccount);
+        return remove ? bankAccount : null;
+    }
+
+    public BankAccount findBankAccount(String id) {
+        final UUID uuid = UUID.nameUUIDFromBytes(id.getBytes());
+        List<BankAccount> collected = bankAccounts.stream().filter(a -> a.getId() == uuid).collect(Collectors.toList());
         return collected.isEmpty() ? null : collected.get(0);
-    } //TODO zaszyty random UUID
+    }
 
 }
