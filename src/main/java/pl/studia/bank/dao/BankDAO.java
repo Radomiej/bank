@@ -34,8 +34,8 @@ public class BankDAO {
     }
 
     public BankAccount findBankAccount(String id) {
-        final UUID uuid = UUID.nameUUIDFromBytes(id.getBytes());
-        List<BankAccount> collected = bankAccounts.stream().filter(a -> a.getId() == uuid).collect(Collectors.toList());
+        final UUID uuid = UUID.fromString(id);
+        List<BankAccount> collected = bankAccounts.stream().filter(a -> a.getId().equals(uuid)).collect(Collectors.toList());
         return collected.isEmpty() ? null : collected.get(0);
     }
 
