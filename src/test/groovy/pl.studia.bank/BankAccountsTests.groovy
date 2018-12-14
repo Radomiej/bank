@@ -3,10 +3,13 @@ package pl.studia.bank
 import com.google.gson.Gson
 import org.junit.Before
 import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import pl.studia.bank.config.SwaggerConfig
 import pl.studia.bank.controller.BankController
@@ -15,13 +18,13 @@ import spock.lang.Specification
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
 
-//@SpringBootTest
-@ContextConfiguration(classes = [SwaggerConfig.class])
+@SpringBootTest(classes = BankApplication)
 class BankAccountsTests extends Specification{
 
-    def bankController = new BankController()
+    @Autowired
+    BankController bankController
 
-    MockMvc mockMvc = standaloneSetup(bankController).build()
+
 
     Gson gson = new Gson()
 
@@ -32,6 +35,7 @@ class BankAccountsTests extends Specification{
 
 
     def "should add new bank account"(){
+        MockMvc mockMvc = standaloneSetup(bankController).build()
 
         given:
         Map request = [
