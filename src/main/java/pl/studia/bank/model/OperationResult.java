@@ -6,7 +6,4 @@ import lombok.Data;
 public class OperationResult<T> {
     boolean isSuccess;
     T data;
-
-
-    //TODO ...
 }
