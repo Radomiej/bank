@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public enum BigIntegerFactory {
+public enum BigDecimalFactory {
     INSTANCE;
 
     private MathContext mathContext;
 
-    BigIntegerFactory(){
+    BigDecimalFactory(){
         this.mathContext = new MathContext(6, RoundingMode.HALF_UP);
     }
 
@@ -22,6 +22,14 @@ public enum BigIntegerFactory {
     }
 
     public BigDecimal produceFromDouble(double var) {
-        return new BigDecimal(var,mathContext);
+        return new BigDecimal(var, mathContext);
+    }
+
+    public BigDecimal getZeroValue() {
+        return produceFromInt(0);
+    }
+
+    public BigDecimal produceFromLong(long var) {
+        return new BigDecimal(var, mathContext);
     }
 }

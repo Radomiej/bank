@@ -2,16 +2,16 @@ package pl.studia.bank.helper;
 
 import java.math.BigDecimal;
 
-public enum BigIntegerOperation {
+public enum BigDecimalOperation {
     INSTANCE;
 
     public BigDecimal add(BigDecimal valueA, BigDecimal valueB){
-        BigDecimal result = valueA.add(valueB, BigIntegerFactory.INSTANCE.getMathContext());
+        BigDecimal result = valueA.add(valueB, BigDecimalFactory.INSTANCE.getMathContext());
         return result;
     }
 
     public BigDecimal remove(BigDecimal valueA, BigDecimal valueB) {
-        BigDecimal result = valueA.subtract(valueB, BigIntegerFactory.INSTANCE.getMathContext());
+        BigDecimal result = valueA.subtract(valueB, BigDecimalFactory.INSTANCE.getMathContext());
         return result;
     }
 }

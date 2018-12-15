@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.studia.bank.helper.BigIntegerFactory;
+import pl.studia.bank.helper.BigDecimalFactory;
 import pl.studia.bank.model.*;
 import pl.studia.bank.service.BankService;
 import pl.studia.bank.service.TimeService;
@@ -39,7 +39,7 @@ public class BankApplicationTests {
         assertNotNull(addDepositResult);
 
 	    for(int i = 0; i < 3; i++){
-            timeService.symulateNextTurn();
+            timeService.simulateNextTurn();
         }
 
         System.out.println("End Balance: " + bankAccount.getBalance());
@@ -48,7 +48,7 @@ public class BankApplicationTests {
         bankService.addBankCredit(credit);
 
         for(int i = 0; i < 5; i++){
-            timeService.symulateNextTurn();
+            timeService.simulateNextTurn();
         }
 
         System.out.println("End Balance: " + bankAccount.getBalance());
@@ -65,7 +65,7 @@ public class BankApplicationTests {
         credit.setCreateTime(currentTime);
         credit.setEndTime(currentTime + duration);
         credit.setInterest(interest);
-        credit.setVaule(BigIntegerFactory.INSTANCE.produceFromDouble(depositValue));
+        credit.setVaule(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
         credit.setOwnerBankAccount(accountId);
         return credit;
     }
@@ -81,7 +81,7 @@ public class BankApplicationTests {
         deposit.setCreateTime(currentTime);
         deposit.setEndTime(currentTime + duration);
         deposit.setInterest(interest);
-        deposit.setVaule(BigIntegerFactory.INSTANCE.produceFromDouble(depositValue));
+        deposit.setVaule(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
         deposit.setOwnerBankAccount(accountId);
         return deposit;
     }

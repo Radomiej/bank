@@ -23,7 +23,7 @@ public class TimeService {
         this.bankOperationService = bankOperationService;
     }
 
-    public synchronized void symulateNextTurn(){
+    public synchronized void simulateNextTurn(){
         final int currentBankTime = bankTime.getAndIncrement();
         updateActiveDeposits(currentBankTime);
         updateActiveCredits(currentBankTime);
