@@ -36,4 +36,8 @@ public class TimeService {
         }
 
     }
+
+    public int getCurrentTime() {
+        return bankTime.get();
+    }
 }
