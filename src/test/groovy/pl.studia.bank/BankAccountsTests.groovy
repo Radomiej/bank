@@ -1,5 +1,6 @@
 package pl.studia.bank
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.Gson
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -25,13 +26,10 @@ class BankAccountsTests extends Specification{
     BankController bankController
 
 
-
+    ObjectMapper jsonMapper = new ObjectMapper();
     Gson gson = new Gson()
 
-//    @Before
-//    def "init"() {
-//        gson = new Gson()
-//    }
+
 
 
     def "should add new bank account"(){
@@ -39,15 +37,15 @@ class BankAccountsTests extends Specification{
 
         given:
         Map request = [
-        balance : 1000.00,
-        id : 1,
-        ownerId: 1,
-        createdAt: '2018-12-11T16:09:43.511Z'
+            balance : 1000.00,
+            id : 1,
+            ownerId: 1,
+            createdAt: '2018-12-11T16:09:43.511Z'
         ]
         when:
         def response = mockMvc.perform(post('/api/v1/controller/addBankAccount')
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(request)))
+                .content(jsonMapper.writeValueAsString(request)))
                 .andReturn()
                 .response
 

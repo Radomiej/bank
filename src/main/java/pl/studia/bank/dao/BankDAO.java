@@ -39,4 +39,12 @@ public class BankDAO {
         return collected.isEmpty() ? null : collected.get(0);
     }
 
+    public List<Deposit> findDepositsByActive(final boolean active, final int currentTime){
+        List<Deposit> results = new ArrayList<>();
+        for(Deposit deposit : bankDeposits){
+            boolean depositIsActive = deposit.getCreateTime() <= currentTime && deposit.getEndTime() >= currentTime;
+            if(depositIsActive && active) results.add(deposit);
+        }
+        return results;
+    }
 }
