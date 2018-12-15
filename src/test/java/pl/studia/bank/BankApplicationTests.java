@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.studia.bank.helper.BigIntegerFactory;
-import pl.studia.bank.model.BankAccount;
-import pl.studia.bank.model.Deposit;
-import pl.studia.bank.model.Interest;
-import pl.studia.bank.model.OperationResult;
+import pl.studia.bank.model.*;
 import pl.studia.bank.service.BankService;
 import pl.studia.bank.service.TimeService;
 
@@ -36,17 +33,42 @@ public class BankApplicationTests {
         BankAccount bankAccount = addBankResult.getData();
         assertNotNull(bankAccount);
 
-        Deposit deposit = createTestDeposit(bankAccount.getId().toString(),3, 1000, 10d);
+        Deposit deposit = createTestDeposit(bankAccount.getId().toString(),3, 1000, 0.10d);
 
         OperationResult<Deposit> addDepositResult = bankService.addBankDeposit(deposit);
         assertNotNull(addDepositResult);
 
-	    for(int i = 0; i < 100; i++){
+	    for(int i = 0; i < 3; i++){
+            timeService.symulateNextTurn();
+        }
+
+        System.out.println("End Balance: " + bankAccount.getBalance());
+
+	    Credit credit = createTestCredit(bankAccount.getId().toString(), 5, 1000, 0.20d);
+        bankService.addBankCredit(credit);
+
+        for(int i = 0; i < 5; i++){
             timeService.symulateNextTurn();
         }
 
         System.out.println("End Balance: " + bankAccount.getBalance());
 	}
+
+    private Credit createTestCredit(String accountId, int duration, double depositValue, double interestValue) {
+        Interest interest = new Interest();
+        interest.setChunk(1);
+        interest.setValue(interestValue);
+
+        Credit credit = new Credit();
+        credit.setId(UUID.randomUUID());
+        int currentTime = timeService.getCurrentTime();
+        credit.setCreateTime(currentTime);
+        credit.setEndTime(currentTime + duration);
+        credit.setInterest(interest);
+        credit.setVaule(BigIntegerFactory.INSTANCE.produceFromDouble(depositValue));
+        credit.setOwnerBankAccount(accountId);
+        return credit;
+    }
 
     private Deposit createTestDeposit(String accountId, int duration, double depositValue, double interestValue) {
         Interest interest = new Interest();
