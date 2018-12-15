@@ -31,9 +31,14 @@ public class TimeService {
             if(deposit.getEndTime() != currentBankTime) continue;
 
             BigDecimal balanceToAdd = deposit.getVaule();
-            bankOperationService.addToAccount(deposit.getOwnerBankAccount().toString(), balanceToAdd);
+            bankOperationService.addToAccount(deposit.getOwnerBankAccount(), balanceToAdd);
             deposit.setExhausted(true);
+            System.out.print("Deposit has been ended: " + deposit);
         }
 
+    }
+
+    public int getCurrentTime() {
+        return bankTime.get();
     }
 }

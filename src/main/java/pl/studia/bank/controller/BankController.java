@@ -34,8 +34,8 @@ public class BankController {
     }
 
     @PostMapping("/addBankDeposit")
-    public ResponseEntity<OperationResult<Deposit>> addBankDeposit(@RequestParam("depositValue")int depositValue){
-        OperationResult<Deposit> result = bankService.addBankDeposit(depositValue);
+    public ResponseEntity<OperationResult<Deposit>> addBankDeposit(@RequestBody Deposit deposit){
+        OperationResult<Deposit> result = bankService.addBankDeposit(deposit);
         return ResponseEntity.ok(result);
     }
 

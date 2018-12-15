@@ -6,12 +6,12 @@ public enum BigIntegerOperation {
     INSTANCE;
 
     public BigDecimal add(BigDecimal valueA, BigDecimal valueB){
-        BigDecimal result = valueA.add(valueB);
+        BigDecimal result = valueA.add(valueB, BigIntegerFactory.INSTANCE.getMathContext());
         return result;
     }
 
     public BigDecimal remove(BigDecimal valueA, BigDecimal valueB) {
-        BigDecimal result = valueA.subtract(valueB);
+        BigDecimal result = valueA.subtract(valueB, BigIntegerFactory.INSTANCE.getMathContext());
         return result;
     }
 }

@@ -1,7 +1,6 @@
 package pl.studia.bank.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.studia.bank.dao.BankDAO;
@@ -22,6 +21,9 @@ public class BankService {
     @Autowired
     private BankDAO bankDAO;
 
+    @Autowired
+    private TimeService timeService;
+
     public OperationResult<BankAccount> addBankAccount() {
 
         OperationResult<BankAccount> result = new OperationResult();
@@ -29,7 +31,7 @@ public class BankService {
         BankAccount newBankAccount = new BankAccount();
         newBankAccount.setId(UUID.randomUUID());
         newBankAccount.setOwnerId(UUID.randomUUID());
-        newBankAccount.setCreatedAt(DateTime.now());
+        newBankAccount.setCreatedAt(timeService.getCurrentTime());
         newBankAccount.setBalance(BigIntegerFactory.INSTANCE.produceFromInt(0));
 
         result.setData(newBankAccount);
@@ -55,14 +57,11 @@ public class BankService {
     }
 
     //TODO docelowo int duration, BigDecimal value <-- przekazać w argumentach
-    public OperationResult<Deposit> addBankDeposit(int depositValue) {
+    public OperationResult<Deposit> addBankDeposit(Deposit deposit) {
 
         OperationResult<Deposit> result = new OperationResult();
 
-        Deposit deposit = new Deposit();
-        deposit.setId(UUID.randomUUID());
-        deposit.setBillingPeriod((int)Math.random());
-        deposit.setValue(BigIntegerFactory.INSTANCE.produceFromInt(depositValue));
+
 
 
         result.setData(deposit);
