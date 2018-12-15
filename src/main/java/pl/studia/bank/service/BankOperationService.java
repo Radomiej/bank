@@ -22,7 +22,7 @@ public class BankOperationService {
         bankAccount.setBalance(newBalance);
     }
 
-    public void removeToAccount(String accountId, BigDecimal addAmount){
+    public void substractFromAccount(String accountId, BigDecimal addAmount){
         BankAccount bankAccount = bankDAO.findBankAccount(accountId);
         BigDecimal newBalance = BigIntegerOperation.INSTANCE.remove(bankAccount.getBalance(), addAmount);
         bankAccount.setBalance(newBalance);

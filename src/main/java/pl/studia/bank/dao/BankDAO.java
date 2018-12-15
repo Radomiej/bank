@@ -47,4 +47,13 @@ public class BankDAO {
         }
         return results;
     }
+
+    public List<Credit> findCreditsByActive(final boolean active, final int currentTime) {
+        List<Credit> results = new ArrayList<>();
+        for(Credit credit : bankCredits){
+            boolean depositIsActive = credit.getCreateTime() <= currentTime && credit.getEndTime() >= currentTime;
+            if(depositIsActive && active) results.add(credit);
+        }
+        return results;
+    }
 }
