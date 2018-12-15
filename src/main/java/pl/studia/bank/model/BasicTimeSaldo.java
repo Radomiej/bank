@@ -13,5 +13,5 @@ public class BasicTimeSaldo {
     private int endTime;
     private Interest interest; //Dla mniej kumatych po prostu oprocentowanie :3
     private boolean exhausted;
-    private UUID ownerBankAccount;
+    private String ownerBankAccount;
 }

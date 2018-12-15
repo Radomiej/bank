@@ -4,13 +4,12 @@ package pl.studia.bank.helper;
 import java.math.BigDecimal;
 
 public class Capitalization {
+    public static BigDecimal calculate(BigDecimal value, BigDecimal creditInterestRate, int interestRateAmount) {
+        BigDecimal result = value;
 
-    public BigDecimal calculate(BigDecimal value, double creditInterestRate, int InterestRateAmount){
-        BigDecimal result = value ;
-
-        for(int i = 0; i < InterestRateAmount; i ++ ) {
-            result = result.add(result.multiply(new BigDecimal(creditInterestRate) ));
+        for (int i = 0; i < interestRateAmount; i++) {
+            result = result.add(result.multiply(creditInterestRate));
         }
         return result;
-        }
+    }
 }
