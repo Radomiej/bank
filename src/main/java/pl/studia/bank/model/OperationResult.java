@@ -1,4 +1,9 @@
 package pl.studia.bank.model;
 
-public class OperationResult {
+import lombok.Data;
+
+@Data
+public class OperationResult<T> {
+    boolean isSuccess;
+    T data;
 }
