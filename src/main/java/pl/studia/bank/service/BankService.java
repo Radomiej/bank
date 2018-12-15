@@ -1,7 +1,6 @@
 package pl.studia.bank.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.studia.bank.dao.BankDAO;
@@ -58,16 +57,11 @@ public class BankService {
     }
 
     //TODO docelowo int duration, BigDecimal value <-- przekazać w argumentach
-    public OperationResult<Deposit> addBankDeposit(int depositValue) {
+    public OperationResult<Deposit> addBankDeposit(Deposit deposit) {
 
         OperationResult<Deposit> result = new OperationResult();
 
-        Deposit deposit = new Deposit();
-        deposit.setId(UUID.randomUUID());
-        int currentTime = timeService.getCurrentTime();
-        deposit.setCreateTime(currentTime);
-        deposit.setEndTime(currentTime + (int)Math.random());
-        deposit.setVaule(BigIntegerFactory.INSTANCE.produceFromInt(depositValue));
+
 
 
         result.setData(deposit);
