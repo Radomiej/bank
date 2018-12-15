@@ -49,7 +49,7 @@ class BankAccountsTests extends Specification{
         then: 'should return status created'
         response.status == HttpStatus.OK.value() // zamiast status OK zrobić CREATED (201)
 
-        and:
+        and: 'and returned JSON should contain succes status equals true'
         with(gson.fromJson(response.contentAsString,Map)){
             it.success == true
         }
