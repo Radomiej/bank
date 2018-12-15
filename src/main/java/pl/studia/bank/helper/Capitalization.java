@@ -9,7 +9,7 @@ public class Capitalization {
         BigDecimal result = value ;
 
         for(int i = 0; i < InterestRateAmount; i ++ ) {
-            result = result.add(result.multiply(new BigDecimal(creditInterestRate) ));
+            result = result.add(result.multiply(BigIntegerFactory.INSTANCE.produceFromDouble(creditInterestRate)));
         }
         return result;
         }
