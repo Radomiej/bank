@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class Credit {
     private UUID id;
-    private BigDecimal vaule;
+    private BigDecimal value;
     private double creditInterestRate; //Dla mniej kumatych po prostu oprocentowanie :3
     private int billingPeriod; //okres naliczania opłat
 
