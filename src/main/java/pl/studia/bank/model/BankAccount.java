@@ -11,6 +11,7 @@ public class BankAccount {
     private BigDecimal balance;
     private UUID id;
     private UUID ownerId;
-    private DateTime createdAt;
+    private int createdAt;
+    private Debet debet;
 
 }
