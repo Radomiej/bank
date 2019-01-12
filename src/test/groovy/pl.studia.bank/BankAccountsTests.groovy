@@ -32,10 +32,7 @@ class BankAccountsTests extends Specification{
         MockMvc mockMvc = standaloneSetup(bankController).build()
         given: 'example form parameters'
         Map request = [
-        balance : 1000.00,
-        id : 1,
-        ownerId: 1,
-        createdAt: '2018-12-11T16:09:43.511Z'
+
         ]
         when: 'post on endpoint to add bank account'
         def response = mockMvc.perform(post('/api/v1/controller/addBankAccount')
