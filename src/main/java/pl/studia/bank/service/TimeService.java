@@ -16,14 +16,16 @@ public class TimeService {
     private BankService bankService;
     private BankDAO bankDAO;
     private BankOperationService bankOperationService;
+    private PercentageService percentageService;
 
-    public TimeService(BankService bankService, BankDAO bankDAO, BankOperationService bankOperationService){
+    public TimeService(BankService bankService, BankDAO bankDAO, BankOperationService bankOperationService, PercentageService percentageService) {
         this.bankService = bankService;
         this.bankDAO = bankDAO;
         this.bankOperationService = bankOperationService;
+        this.percentageService = percentageService;
     }
 
-    public synchronized void simulateNextTurn(){
+    public synchronized void simulateNextTurn() {
         final int currentBankTime = bankTime.getAndIncrement();
         updateActiveDeposits(currentBankTime);
         updateActiveCredits(currentBankTime);
@@ -32,25 +34,26 @@ public class TimeService {
 
     private void updateActiveDeposits(int currentBankTime) {
         List<Deposit> activeDeposits = bankDAO.findDepositsByActive(true, currentBankTime);
-        for(Deposit deposit : activeDeposits){
-            if(deposit.getEndTime() != currentBankTime) continue;
+        for (Deposit deposit : activeDeposits) {
+            if (deposit.getEndTime() != currentBankTime) continue;
 
-            BigDecimal balanceToAdd = deposit.getVaule();
+            BigDecimal balanceToAdd = percentageService.computePaymentAmount(deposit.getVaule(), deposit.getInterest());
             bankOperationService.addToAccount(deposit.getOwnerBankAccount(), balanceToAdd);
             deposit.setExhausted(true);
-            System.out.println("Deposit has been ended: " + deposit);
+            System.out.println("Deposit has been ended: " + deposit + " amount to take: " + balanceToAdd);
         }
     }
 
     private void updateActiveCredits(int currentBankTime) {
         List<Credit> activeCredits = bankDAO.findCreditsByActive(true, currentBankTime);
-        for(Credit credit : activeCredits){
-            if(credit.getEndTime() != currentBankTime) continue;
+        for (Credit credit : activeCredits) {
+            if (credit.getEndTime() != currentBankTime) continue;
 
-            BigDecimal balanceToSubtract = credit.getVaule();
+            BigDecimal balanceToSubtract = percentageService.computePaymentAmount(credit.getVaule(), credit.getInterest());
+
             bankOperationService.substractFromAccount(credit.getOwnerBankAccount(), balanceToSubtract);
             credit.setExhausted(true);
-            System.out.println("Credit has been ended: " + credit);
+            System.out.println("Credit has been ended: " + credit + " amount to pay: " + balanceToSubtract);
         }
     }
 

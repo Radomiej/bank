@@ -33,6 +33,8 @@ public class BankOperationService {
 
     private BigDecimal fillDebit(BankAccount bankAccount, BigDecimal addAmount) {
         Debit debit = bankAccount.getDebit();
+        if(debit == null) return addAmount;
+
         BigDecimal debitValue = debit.getValue();
         if(debitValue.compareTo(BigDecimalFactory.INSTANCE.getZeroValue()) == 0) return addAmount;
 

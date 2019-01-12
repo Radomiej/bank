@@ -8,9 +8,11 @@ public enum BigDecimalFactory {
     INSTANCE;
 
     private MathContext mathContext;
-
+    private BigDecimal zero, one;
     BigDecimalFactory(){
         this.mathContext = new MathContext(6, RoundingMode.HALF_UP);
+        zero = produceFromInt(0);
+        one = produceFromInt(1);
     }
 
     public MathContext getMathContext(){
@@ -26,10 +28,19 @@ public enum BigDecimalFactory {
     }
 
     public BigDecimal getZeroValue() {
-        return produceFromInt(0);
+        return zero;
     }
 
     public BigDecimal produceFromLong(long var) {
         return new BigDecimal(var, mathContext);
+    }
+
+    public BigDecimal copy(BigDecimal bigDecimal){
+        BigDecimal copy = bigDecimal;
+        return copy;
+    }
+
+    public BigDecimal getOneValue() {
+        return one;
     }
 }

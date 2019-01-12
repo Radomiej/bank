@@ -38,7 +38,7 @@ public class BankApplicationTests {
         OperationResult<Deposit> addDepositResult = bankService.addBankDeposit(deposit);
         assertNotNull(addDepositResult);
 
-	    for(int i = 0; i < 3; i++){
+	    for(int i = 0; i <= 3; i++){
             timeService.simulateNextTurn();
         }
 
@@ -47,7 +47,7 @@ public class BankApplicationTests {
 	    Credit credit = createTestCredit(bankAccount.getId().toString(), 5, 1000, 0.20d);
         bankService.addBankCredit(credit);
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i <= 5; i++){
             timeService.simulateNextTurn();
         }
 
@@ -72,7 +72,7 @@ public class BankApplicationTests {
 
     private Deposit createTestDeposit(String accountId, int duration, double depositValue, double interestValue) {
         Interest interest = new Interest();
-        interest.setChunk(1);
+        interest.setChunk(5);
         interest.setValue(interestValue);
 
         Deposit deposit = new Deposit();
