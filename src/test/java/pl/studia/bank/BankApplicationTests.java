@@ -37,7 +37,6 @@ public class BankApplicationTests {
 
         OperationResult<Deposit> addDepositResult = bankService.addBankDeposit(deposit);
         assertNotNull(addDepositResult);
-
 	    for(int i = 0; i <= 3; i++){
             timeService.simulateNextTurn();
         }
