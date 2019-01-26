@@ -49,7 +49,7 @@ public class BankOperationService {
         return addAmount;
     }
 
-    public void substractFromAccount(String accountId, BigDecimal addAmount){
+    public void subtractFromAccount(String accountId, BigDecimal addAmount){
         BankAccount bankAccount = bankDAO.findBankAccount(accountId);
         BigDecimal newBalance = BigDecimalOperation.INSTANCE.remove(bankAccount.getBalance(), addAmount);
         bankAccount.setBalance(newBalance);

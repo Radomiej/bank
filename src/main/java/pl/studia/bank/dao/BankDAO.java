@@ -23,6 +23,17 @@ public class BankDAO {
         bankAccounts.add(newBankAccount);
     }
 
+    public void updateBankAccount(BankAccount updatedBankAccount) throws BankAccountException {
+        BankAccount realInstance = findBankAccount(updatedBankAccount.getId().toString());
+        if(updatedBankAccount != null &&  realInstance != null){
+            if(updatedBankAccount == realInstance) return;
+            deleteBankAccount(updatedBankAccount.getId().toString());
+
+        }
+
+        addBankAccount(updatedBankAccount);
+    }
+
     public void addBankDeposit(Deposit newBankDeposit) throws BankDepositException { bankDeposits.add(newBankDeposit); }
 
     public void addBankCredit(Credit newBankCredit) throws BankCreditException { bankCredits.add(newBankCredit); }
@@ -56,4 +67,6 @@ public class BankDAO {
         }
         return results;
     }
+
+
 }

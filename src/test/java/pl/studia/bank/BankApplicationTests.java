@@ -64,7 +64,7 @@ public class BankApplicationTests {
         credit.setCreateTime(currentTime);
         credit.setEndTime(currentTime + duration);
         credit.setInterest(interest);
-        credit.setVaule(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
+        credit.setValue(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
         credit.setOwnerBankAccount(accountId);
         return credit;
     }
@@ -80,7 +80,7 @@ public class BankApplicationTests {
         deposit.setCreateTime(currentTime);
         deposit.setEndTime(currentTime + duration);
         deposit.setInterest(interest);
-        deposit.setVaule(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
+        deposit.setValue(BigDecimalFactory.INSTANCE.produceFromDouble(depositValue));
         deposit.setOwnerBankAccount(accountId);
         return deposit;
     }

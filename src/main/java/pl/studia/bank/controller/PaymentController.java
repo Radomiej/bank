@@ -31,10 +31,10 @@ public class PaymentController {
     }
 
     @DeleteMapping("/deposit")
-    public ResponseEntity<Boolean> substractBankAccount(@RequestParam("accountId") String accountId, @RequestParam("value") long rawValue){
+    public ResponseEntity<Boolean> subtractBankAccount(@RequestParam("accountId") String accountId, @RequestParam("value") long rawValue){
         BigDecimal value = BigDecimalFactory.INSTANCE.produceFromLong(rawValue);
         value = value.divide(BigDecimalFactory.INSTANCE.produceFromInt(100));
-        bankOperationService.substractFromAccount(accountId, value);
+        bankOperationService.subtractFromAccount(accountId, value);
         return ResponseEntity.ok(true);
     }
 }

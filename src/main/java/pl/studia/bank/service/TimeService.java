@@ -37,7 +37,7 @@ public class TimeService {
         for (Deposit deposit : activeDeposits) {
             if (deposit.getEndTime() != currentBankTime) continue;
 
-            BigDecimal balanceToAdd = percentageService.computePaymentAmount(deposit.getVaule(), deposit.getInterest());
+            BigDecimal balanceToAdd = percentageService.computePaymentAmount(deposit.getValue(), deposit.getInterest());
             bankOperationService.addToAccount(deposit.getOwnerBankAccount(), balanceToAdd);
             deposit.setExhausted(true);
             System.out.println("Deposit has been ended: " + deposit + " amount to take: " + balanceToAdd);
@@ -49,9 +49,9 @@ public class TimeService {
         for (Credit credit : activeCredits) {
             if (credit.getEndTime() != currentBankTime) continue;
 
-            BigDecimal balanceToSubtract = percentageService.computePaymentAmount(credit.getVaule(), credit.getInterest());
+            BigDecimal balanceToSubtract = percentageService.computePaymentAmount(credit.getValue(), credit.getInterest());
 
-            bankOperationService.substractFromAccount(credit.getOwnerBankAccount(), balanceToSubtract);
+            bankOperationService.subtractFromAccount(credit.getOwnerBankAccount(), balanceToSubtract);
             credit.setExhausted(true);
             System.out.println("Credit has been ended: " + credit + " amount to pay: " + balanceToSubtract);
         }

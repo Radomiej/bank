@@ -57,6 +57,7 @@ public class BankService {
     public OperationResult<Deposit> addBankDeposit(Deposit deposit) {
         OperationResult<Deposit> result = new OperationResult();
 
+        deposit.setId(UUID.randomUUID());
         result.setData(deposit);
         result.setSuccess(true);
 
@@ -91,6 +92,26 @@ public class BankService {
         OperationResult<BankAccount> result = new OperationResult();
         BankAccount bankAccount = bankDAO.findBankAccount(bankAccountId);
         bankAccount.setDebit(debit);
+        try {
+            bankDAO.updateBankAccount(bankAccount);
+        } catch (BankAccountException ex) {
+            result.setSuccess(false);
+            log.error(ex.getMessage());
+        }
+
+        result.setSuccess(true);
+        result.setData(bankAccount);
+        return result;
+    }
+
+    public OperationResult<BankAccount> getBankAccount(String bankAccountId) {
+        OperationResult<BankAccount> result = new OperationResult();
+        BankAccount bankAccount = bankDAO.findBankAccount(bankAccountId);
+
+        if(bankAccount == null){
+            result.setSuccess(false);
+            return result;
+        }
 
         result.setSuccess(true);
         result.setData(bankAccount);
